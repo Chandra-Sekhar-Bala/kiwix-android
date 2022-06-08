@@ -106,7 +106,8 @@ class OnlineLibraryFragment : BaseFragment(), FragmentActivityExtensions {
       LibraryDelegate.DownloadDelegate {
         dialogShower.show(
           KiwixDialog.YesNoDialog.StopDownload,
-          { downloader.cancelDownload(it.downloadId) })
+          { downloader.cancelDownload(it.downloadId) }
+        )
       },
       LibraryDelegate.DividerDelegate
     )
@@ -152,7 +153,9 @@ class OnlineLibraryFragment : BaseFragment(), FragmentActivityExtensions {
       viewLifecycleOwner, Observer(::onRefreshStateChange)
     )
     zimManageViewModel.networkStates.observe(viewLifecycleOwner, Observer(::onNetworkStateChange))
-    zimManageViewModel.shouldShowWifiOnlyDialog.observe(viewLifecycleOwner, Observer {
+    zimManageViewModel.shouldShowWifiOnlyDialog.observe(
+      viewLifecycleOwner
+    ) {
       if (it) {
         dialogShower.show(
           WifiOnly,
@@ -169,14 +172,16 @@ class OnlineLibraryFragment : BaseFragment(), FragmentActivityExtensions {
           }
         )
       }
-    })
+    }
 
     // hides keyboard when scrolled
-    libraryList.addOnScrollListener(SimpleRecyclerViewScrollListener { _, newState ->
-      if (newState == RecyclerView.SCROLL_STATE_DRAGGING) {
-        libraryList.closeKeyboard()
+    libraryList.addOnScrollListener(
+      SimpleRecyclerViewScrollListener { _, newState ->
+        if (newState == RecyclerView.SCROLL_STATE_DRAGGING) {
+          libraryList.closeKeyboard()
+        }
       }
-    })
+    )
   }
 
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -388,7 +393,8 @@ class OnlineLibraryFragment : BaseFragment(), FragmentActivityExtensions {
           })
           return
         }
-        else -> availableSpaceCalculator.hasAvailableSpaceFor(item,
+        else -> availableSpaceCalculator.hasAvailableSpaceFor(
+          item,
           { downloadFile(item.book) },
           {
             libraryList.snack(
@@ -398,7 +404,8 @@ class OnlineLibraryFragment : BaseFragment(), FragmentActivityExtensions {
               R.string.download_change_storage,
               ::showStorageSelectDialog
             )
-          })
+          }
+        )
       }
     }
   }
