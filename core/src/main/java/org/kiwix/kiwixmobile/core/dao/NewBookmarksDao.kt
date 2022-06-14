@@ -48,7 +48,7 @@ class NewBookmarksDao @Inject constructor(val box: Box<BookmarkEntity>) : PageDa
     .toList()
     .distinct()
 
-  fun bookmarkUrlsForCurrentBook(zimFileReader: ZimFileReader?): Flowable<List<String>> =
+  fun bookmarkUrlsForCurrentBook(zimFileReader: ZimFileReader?): Flowable<List<String?>> =
     box.asFlowable(
       box.query {
         equal(BookmarkEntity_.zimId, zimFileReader?.id ?: "")
